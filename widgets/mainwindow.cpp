@@ -18269,7 +18269,7 @@ void MainWindow::uploadToLotw()
       QString{"OK to %1disable Tx while uploading QSOs?"}.arg(cur))) return;
 
   m_nextCall="";
-  m_enableButtonNotify = false; //avt 1/21/26
+  if (m_remoteCmd) m_enableButtonNotify = false; //avt 7/1/26
   on_stopTxButton_clicked();
   abortQSO();
   m_enableButtonNotify = true; //avt 1/21/26
