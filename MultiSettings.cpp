@@ -195,7 +195,7 @@ private:
 
   // action to take on restart
   enum class RepositionType {unchanged, replace, save_and_replace};
-  void restart (RepositionType);
+  bool restart (RepositionType);
 
   MultiSettings const * parent_;  // required for emitting signals
   QMainWindow * main_window_;
@@ -594,9 +594,16 @@ void MultiSettings::impl::select_configuration (QString const& target_name)
       if (changed)
         {
           // and set up the restart
+          auto const previous_name = current_;
           current_ = target_name;
           Q_EMIT parent_->configurationNameChanged (unescape_ampersands (current_));
-          restart (RepositionType::save_and_replace);
+          if (!restart (RepositionType::save_and_replace))
+            {
+              // avt 9/13/26 main window refused to close, stay on the
+              // current configuration
+              current_ = previous_name;
+              Q_EMIT parent_->configurationNameChanged (unescape_ampersands (current_));
+            }
         }
     }
 }
@@ -821,11 +828,21 @@ void MultiSettings::impl::delete_configuration (QMenu * menu)
   menu->deleteLater ();
 }
 
-void MultiSettings::impl::restart (RepositionType type)
+bool MultiSettings::impl::restart (RepositionType type)
 {
   Q_ASSERT (main_window_);
   reposition_type_ = type;
   exit_flag_ = false;
-  main_window_->close ();
+  if (!main_window_->close ())
+    {
+      // avt 9/13/26 close was ignored (e.g. logbook still loading),
+      // cancel the restart so a later close exits normally instead of
+      // restarting and main_window_ stays valid for further menu use
+      reposition_type_ = RepositionType::unchanged;
+      exit_flag_ = true;
+      new_settings_.clear ();
+      return false;
+    }
   main_window_ = nullptr;
+  return true;
 }

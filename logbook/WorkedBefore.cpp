@@ -373,8 +373,22 @@ public:
   {
   }
 
+  // avt 9/13/26 the loader thread reads prefixes_, it must not be
+  // destroyed while a load is running (large logs take many seconds)
+  ~impl ()
+  {
+    async_loader_.waitForFinished ();
+  }
+
   void reload ()
   {
+    // avt 9/13/26 prefixes_.reload() clears the tables the loader
+    // thread is reading, defer until the running load finishes
+    if (async_loader_.isRunning ())
+      {
+        reload_pending_ = true;
+        return;
+      }
     prefixes_.reload (configuration_);
     async_loader_ = QtConcurrent::run (loader, path_, &prefixes_);
     loader_watcher_.setFuture (async_loader_);
@@ -386,6 +400,7 @@ public:
   QFutureWatcher<worked_before_database_type> loader_watcher_;
   QFuture<worked_before_database_type> async_loader_;
   worked_before_database_type worked_;
+  bool reload_pending_ {false};
 };
 
 WorkedBefore::WorkedBefore (Configuration const * configuration)
@@ -393,6 +408,14 @@ WorkedBefore::WorkedBefore (Configuration const * configuration)
 {
   Q_ASSERT (configuration);
   connect (&m_->loader_watcher_, &QFutureWatcher<worked_before_database_type>::finished, [this] () {
+      if (m_->reload_pending_)
+        {
+          // avt 9/13/26 a reload was requested during the load, the
+          // result is stale so start again
+          m_->reload_pending_ = false;
+          m_->reload ();
+          return;
+        }
       QString error;
       size_t n {0};
       try

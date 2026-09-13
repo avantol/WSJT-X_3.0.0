@@ -26,12 +26,12 @@ namespace
 
 QString testVer ()    //avt 1/29/26
 {
-  return "2";
+  return "3";
 }
 
 QString revision (QString const& scs_rev_string)
 {
-  return "103";
+  return "105";
   QString result;
   auto revision_from_scs = revision_extract_number (scs_rev_string);
 

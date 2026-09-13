@@ -1893,11 +1893,13 @@ Configuration::impl::impl (Configuration * self, QNetworkAccessManager * network
   connect (ui_->udp_interfaces_combo_box, &QComboBox::currentTextChanged, this, &Configuration::impl::validate_network_interfaces);
 
   // set up LoTW users CSV file fetching
-  connect (&lotw_users_, &LotWUsers::load_finished, [this] () {
+  // avt 9/13/26 these signals are emitted from the LotWUsers loader
+  // thread, the context object queues the lambdas to the GUI thread
+  connect (&lotw_users_, &LotWUsers::load_finished, this, [this] () {
     ui_->LotW_CSV_fetch_push_button->setEnabled (true);
   });
 
-  connect(&lotw_users_, &LotWUsers::progress, [this] (QString const& msg) {
+  connect(&lotw_users_, &LotWUsers::progress, this, [this] (QString const& msg) {
       ui_->LotW_CSV_status_label->setText(msg);
   });
 
@@ -2096,8 +2098,10 @@ Configuration::impl::impl (Configuration * self, QNetworkAccessManager * network
     }
   // load the LoTW users dictionary if it exists, fetch and load if it
   // doesn't and we need it
-  // avt 2/10/26 prevent crash, wait until very large logbook read
-  QTimer::singleShot (30000, [=] {lotw_users_.load (ui_->LotW_CSV_URL_line_edit->text (), fetch_if_needed);});
+  // avt 9/13/26 load now, the 30 s timer (avt 2/10/26) had no context
+  // object so it fired into a destroyed impl after a configuration
+  // switch restarted the main window
+  lotw_users_.load (ui_->LotW_CSV_URL_line_edit->text (), fetch_if_needed);
   
   transceiver_thread_ = new QThread {this};
   transceiver_thread_->start ();
@@ -2710,7 +2714,7 @@ void Configuration::impl::read_settings ()
     if (rig_params_.ptt_type == TransceiverFactory::PTT_method_CAT) rig_params_.ptt_type = TransceiverFactory::PTT_method_VOX;
   }
 #ifdef WIN32
-  QTimer::singleShot (2500, [=] {display_file_information ();});
+  QTimer::singleShot (2500, this, [=] {display_file_information ();});
 #else
   ui_->hamlib_groupBox->setTitle("Hamlib Version");
   ui_->rbHamlib64->setVisible(false);
@@ -2719,7 +2723,7 @@ void Configuration::impl::read_settings ()
   ui_->revert_update_button->setVisible(false);
   ui_->backed_up_text->setVisible(false);
   ui_->backed_up->setVisible(false);
-  QTimer::singleShot (2500, [=] {display_file_information ();});
+  QTimer::singleShot (2500, this, [=] {display_file_information ();});
 #endif
 }
 
@@ -3908,11 +3912,11 @@ void Configuration::impl::after_hamlib_downloaded ()
 {
   QDir dataPath = QCoreApplication::applicationDirPath();
   QFile::rename(dataPath.absolutePath() + "/" + "libhamlib-4.dll", dataPath.absolutePath() + "/" + "libhamlib-4_old.dll");
-  QTimer::singleShot (1000, [=] {
+  QTimer::singleShot (1000, this, [=] {
     QFile::rename(dataPath.absolutePath() + "/" + "libhamlib-4_new.dll", dataPath.absolutePath() + "/" + "libhamlib-4.dll");
     ui_->in_use->setText("Download completed. Restart the program.");
   });
-  QTimer::singleShot (1500, [=] {
+  QTimer::singleShot (1500, this, [=] {
     MessageBox::information_message (this, tr ("Hamlib Update successful \n\nNew Hamlib will be used after restart"));
     ui_->revert_update_button->setEnabled (true);
     ui_->hamlib_download_button->setEnabled (true);
@@ -3928,10 +3932,10 @@ void Configuration::impl::on_revert_update_button_clicked (bool /*clicked*/)
     ui_->revert_update_button->setEnabled (false);
     ui_->hamlib_download_button->setEnabled (false);
     QFile::rename(dataPath.absolutePath() + "/" + "libhamlib-4.dll", dataPath.absolutePath() + "/" + "libhamlib-4_new.dll");
-    QTimer::singleShot (1000, [=] {
+    QTimer::singleShot (1000, this, [=] {
       QFile::copy(dataPath.absolutePath() + "/" + "libhamlib-4_old.dll", dataPath.absolutePath() + "/" + "libhamlib-4.dll");
     });
-    QTimer::singleShot (2000, [=] {
+    QTimer::singleShot (2000, this, [=] {
       MessageBox::information_message (this, tr ("Hamlib successfully reverted \n\nReverted Hamlib will be used after restart"));
       ui_->revert_update_button->setEnabled (true);
       ui_->hamlib_download_button->setEnabled (true);

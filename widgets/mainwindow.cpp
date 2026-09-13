@@ -1482,7 +1482,7 @@ MainWindow::MainWindow(QDir const& temp_directory, bool multiple,
 
   // Ensure that the correct frequency is set and displayed
   if(m_mode=="Echo") {
-    QTimer::singleShot (5000, [=] {
+    QTimer::singleShot (5000, this, [=] {
       auto const& row = m_config.frequencies ()->best_working_frequency (m_freqNominal);
       ui->bandComboBox->setCurrentIndex (row);
       if (row >= 0) on_bandComboBox_activated (row);
@@ -1494,7 +1494,7 @@ MainWindow::MainWindow(QDir const& temp_directory, bool multiple,
 
   if(m_mode=="MSK144") {
     if (m_tci_audio) {
-      QTimer::singleShot (5000, [=] {
+      QTimer::singleShot (5000, this, [=] {
         if (ui->bandComboBox->currentText()!="OOB") {
           Q_EMIT m_config.transceiver_trfrequency(1000.0);
         } else {
@@ -1506,7 +1506,7 @@ MainWindow::MainWindow(QDir const& temp_directory, bool multiple,
     }
   } else {
     if (m_tci_audio) {
-      QTimer::singleShot (5000, [=] {
+      QTimer::singleShot (5000, this, [=] {
         if (ui->bandComboBox->currentText()!="OOB") {
           Q_EMIT m_config.transceiver_trfrequency(ui->TxFreqSpinBox->value () - m_XIT);
         } else {
@@ -1520,7 +1520,7 @@ MainWindow::MainWindow(QDir const& temp_directory, bool multiple,
 
   if(m_tci_audio)
   {
-    QTimer::singleShot (5000, [=] {
+    QTimer::singleShot (5000, this, [=] {
       int attVal = ui->outAttenuation->value();
       ui->outAttenuation->setValue(0);
       ui->outAttenuation->setValue(attVal);
@@ -1600,7 +1600,7 @@ MainWindow::MainWindow(QDir const& temp_directory, bool multiple,
   // Starting in FT8 Hound mode needs this initialization
   if (m_specOp==SpecOp::HOUND) {
       on_ft8Button_clicked();
-      QTimer::singleShot (50, [=] {ui->houndButton->click();});
+      QTimer::singleShot (50, this, [=] {ui->houndButton->click();});
   }
 
   ui->labDXped->setVisible(SpecOp::NONE != m_specOp);
@@ -1647,7 +1647,7 @@ MainWindow::MainWindow(QDir const& temp_directory, bool multiple,
   QFile f {dataPath.absolutePath() + "/" + "libhamlib-4_old.dll"};
   if (!f.exists()) {
       QFile::copy(dataPath.absolutePath() + "/" + "libhamlib-4.dll", dataPath.absolutePath() + "/" + "libhamlib-4_old.dll");
-      QTimer::singleShot (5000, [=] {  //wait until hamlib has been started
+      QTimer::singleShot (5000, this, [=] {  //wait until hamlib has been started
         extern char* hamlib_version2;
         QString hamlib = QString(QLatin1String(hamlib_version2));
         m_settings->beginGroup("Configuration");
