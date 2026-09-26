@@ -1143,7 +1143,7 @@ MainWindow::MainWindow(QDir const& temp_directory, bool multiple,
       setDecodedTextFont (font);
     });
 
-  setWindowTitle (program_title ("  (mod)"));    //avt 10/2/25
+  setWindowTitle (program_title ());    //avt 9/25/26 brand supplies the title
 
   connect(&proc_jt9, &QProcess::readyReadStandardOutput, this, &MainWindow::readFromStdout);
 #if QT_VERSION < QT_VERSION_CHECK (5, 6, 0)

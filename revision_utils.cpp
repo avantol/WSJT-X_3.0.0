@@ -83,8 +83,33 @@ QString version (bool include_patch)
   return v;
 }
 
+// avt 9/25/26 "FT8 (UDP Edition)" branding. The application name is
+// still "WSJT-X", so settings, the writeable data directory and the UDP
+// id are unchanged; only what the user sees is re-branded. MAP65 and
+// QMAP set their own application names and keep their own titles.
+// The displayed program name. Use this instead of
+// QCoreApplication::applicationName () anywhere the name is shown to
+// the user, such as window titles; applicationName () itself must stay
+// "WSJT-X" because it locates the settings and data directory, keys the
+// jt9 shared memory and identifies us to UDP clients.
+QString program_name ()
+{
+  auto const& app_name = QCoreApplication::applicationName ();
+  if (app_name.startsWith ("WSJT-X"))
+    {
+      // keep any multi-instance suffix, e.g. " - 7300" or " - test"
+      return "FT8 (UDP Edition)" + app_name.mid (6);
+    }
+  return app_name;                // MAP65, QMAP and the UDP examples
+}
+
 QString program_title (QString const& revision)
 {
-  QString id {QCoreApplication::applicationName () + "   v" + QCoreApplication::applicationVersion ()};
+  auto const& app_name = QCoreApplication::applicationName ();
+  if (app_name.startsWith ("WSJT-X"))
+    {
+      return "FT8 (UDP Edition) v3-" + ::revision () + app_name.mid (6);
+    }
+  QString id {app_name + "   v" + QCoreApplication::applicationVersion ()};
   return id + " " + revision;
 }

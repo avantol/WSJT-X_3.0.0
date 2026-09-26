@@ -24,6 +24,7 @@
 #include "qt_helpers.hpp"
 #include "QSYMessageCreator.h"
 #include "ui_QSYMessageCreator.h"
+#include "revision_utils.hpp"
 
 QSYMessageCreator::QSYMessageCreator(QSettings * settings, Configuration const * configuration, QWidget *parent)
     : QWidget(parent),
@@ -31,7 +32,7 @@ QSYMessageCreator::QSYMessageCreator(QSettings * settings, Configuration const *
     configuration_ {configuration},
     ui(new Ui::QSYMessageCreator) {
   ui->setupUi(this);
-  setWindowTitle (QApplication::applicationName () + " - " + tr ("MessageCreator"));
+  setWindowTitle (program_name () + " - " + tr ("MessageCreator"));
   QButtonGroup *modeButtonGroup = new QButtonGroup;
   modeButtonGroup-> setExclusive(true);
   modeButtonGroup->addButton(ui->radioButFM);

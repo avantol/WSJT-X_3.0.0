@@ -12,6 +12,7 @@
 
 #include "ui_ExportCabrillo.h"
 #include "moc_ExportCabrillo.cpp"
+#include "revision_utils.hpp"
 
 ExportCabrillo::ExportCabrillo (QSettings * settings, Configuration const * configuration
                                 , CabrilloLog const * log, QWidget * parent)
@@ -23,7 +24,7 @@ ExportCabrillo::ExportCabrillo (QSettings * settings, Configuration const * conf
 {
   ui->setupUi (this);
   read_settings ();
-  setWindowTitle (QApplication::applicationName() + " - Export Cabrillo");
+  setWindowTitle (program_name () + " - Export Cabrillo");
   connect (ui->buttonBox, &QDialogButtonBox::accepted, this, &ExportCabrillo::save_log);
 }
 

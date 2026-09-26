@@ -21,6 +21,7 @@
 
 #include "ui_astro.h"
 #include "moc_astro.cpp"
+#include "revision_utils.hpp"
 
 
 extern "C" {
@@ -45,7 +46,7 @@ Astro::Astro(QSettings * settings, Configuration const * configuration, QWidget 
   //, m_dx_two_way_dop {0}
 {
   ui_->setupUi (this);
-  setWindowTitle (QApplication::applicationName () + " - " + tr ("Astronomical Data"));
+  setWindowTitle (program_name () + " - " + tr ("Astronomical Data"));
   setBackgroundRole (QPalette::Base);
   setAutoFillBackground (true);
   connect (ui_->cbDopplerTracking, &QAbstractButton::toggled, ui_->doppler_widget, &QWidget::setVisible);

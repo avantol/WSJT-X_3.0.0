@@ -6,6 +6,7 @@
 #include "echoplot.h"
 #include "ui_echograph.h"
 #include "moc_echograph.cpp"
+#include "revision_utils.hpp"
 
 #define NSMAX2 1366
 
@@ -15,7 +16,7 @@ EchoGraph::EchoGraph(QSettings * settings, QWidget *parent) :
   ui(new Ui::EchoGraph)
 {
   ui->setupUi(this);
-  setWindowTitle (QApplication::applicationName () + " - " + tr ("Echo Graph"));
+  setWindowTitle (program_name () + " - " + tr ("Echo Graph"));
   installEventFilter(parent);                   //Installing the filter
   ui->echoPlot->setCursor(Qt::CrossCursor);
   setMaximumWidth(2048);

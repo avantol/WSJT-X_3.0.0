@@ -88,6 +88,20 @@ set (PROJECT_MANUAL_DIRECTORY_URL https://wsjt.sourceforge.io/wsjtx-doc/)
 set (PROJECT_SAMPLES_URL http://downloads.sourceforge.net/project/wsjt/)
 set (PROJECT_SAMPLES_UPLOAD_DEST frs.sourceforge.net:/home/frs/project/wsjt/)
 
+# avt 9/25/26 displayed branding, used by the installer. The build
+# number is read from revision_utils.cpp so it only has to be bumped
+# there.
+file (READ "${PROJECT_SOURCE_DIR}/revision_utils.cpp" PROJECT_REVISION_SOURCE)
+string (REGEX MATCH "QString revision \\(QString const& scs_rev_string\\)[^\"]*\"([0-9]+)\"" PROJECT_REVISION_MATCH "${PROJECT_REVISION_SOURCE}")
+set (PROJECT_BUILD_NUMBER "${CMAKE_MATCH_1}")
+if (NOT PROJECT_BUILD_NUMBER)
+  message (WARNING "cannot read the build number from revision_utils.cpp")
+  set (PROJECT_BUILD_NUMBER "0")
+endif ()
+set (PROJECT_DISPLAY_NAME "FT8 (UDP Edition)")
+set (PROJECT_DISPLAY_VERSION "v${PROJECT_VERSION_MAJOR}-${PROJECT_BUILD_NUMBER}")
+message (STATUS "Branding: ${PROJECT_DISPLAY_NAME} ${PROJECT_DISPLAY_VERSION}")
+
 # make sure that the default configuration is a RELEASE
 if (NOT CMAKE_BUILD_TYPE)
   set (CMAKE_BUILD_TYPE RELEASE CACHE STRING

@@ -9,6 +9,7 @@
 
 #include "ui_fastgraph.h"
 #include "moc_fastgraph.cpp"
+#include "revision_utils.hpp"
 
 #define NSMAX2 1366
 
@@ -21,7 +22,7 @@ FastGraph::FastGraph(QSettings * settings, QWidget *parent) :
   ui {new Ui::FastGraph}
 {
   ui->setupUi(this);
-  setWindowTitle (QApplication::applicationName () + " - " + tr ("Fast Graph"));
+  setWindowTitle (program_name () + " - " + tr ("Fast Graph"));
   installEventFilter(parent);                   //Installing the filter
   ui->fastPlot->setCursor(Qt::CrossCursor);
 

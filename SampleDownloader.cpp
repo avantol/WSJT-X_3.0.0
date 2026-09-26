@@ -63,6 +63,7 @@ private:
 };
 
 #include "SampleDownloader.moc"
+#include "revision_utils.hpp"
 
 SampleDownloader::SampleDownloader (QSettings * settings, Configuration const * configuration
                                     , QNetworkAccessManager * network_manager, QWidget * parent)
@@ -98,7 +99,7 @@ SampleDownloader::impl::impl (QSettings * settings
     directory_.url_root (url_line_edit_.text ());
   }
 
-  setWindowTitle (QApplication::applicationName () + " - " + tr ("Download Samples"));
+  setWindowTitle (program_name () + " - " + tr ("Download Samples"));
 
   button_box_.button (QDialogButtonBox::Close)->setDefault (true);
   button_box_.addButton (tr ("&Abort"), QDialogButtonBox::DestructiveRole);

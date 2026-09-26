@@ -12,6 +12,7 @@
 #include <QWidget>
 #include <QMessageBox>
 #include <QStringList>
+#include "revision_utils.hpp"
 
 QSYMonitor::QSYMonitor(QSettings * settings, QFont const& font, Configuration const * configuration, QWidget *parent)
   : QWidget(parent),
@@ -20,7 +21,7 @@ QSYMonitor::QSYMonitor(QSettings * settings, QFont const& font, Configuration co
   ui(new Ui::QSYMonitor)
 {
   ui->setupUi(this);
-  setWindowTitle (QApplication::applicationName () + " - " + tr ("QSY Monitor"));
+  setWindowTitle (program_name () + " - " + tr ("QSY Monitor"));
   ui->QSYMonitorTextBrowser->setReadOnly (true);
   changeFont (font);
   read_settings ();

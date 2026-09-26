@@ -11,6 +11,7 @@
 #include "ui_activeStations.h"
 
 #include "moc_activeStations.cpp"
+#include "revision_utils.hpp"
 
 ActiveStations::ActiveStations(QSettings * settings, QFont const& font, QWidget *parent) :
   QWidget(parent),
@@ -18,7 +19,7 @@ ActiveStations::ActiveStations(QSettings * settings, QFont const& font, QWidget 
   ui(new Ui::ActiveStations)
 {
   ui->setupUi(this);
-  setWindowTitle (QApplication::applicationName () + " - " + tr ("Active Stations"));
+  setWindowTitle (program_name () + " - " + tr ("Active Stations"));
   ui->RecentStationsPlainTextEdit->setReadOnly (true);
   changeFont (font);
   read_settings ();

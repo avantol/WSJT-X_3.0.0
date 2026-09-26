@@ -14,7 +14,7 @@ MessageBox::MessageBox (QWidget * parent)
 
 MessageBox::MessageBox (Icon icon, QString const& text, StandardButtons buttons
                         , QWidget * parent, Qt::WindowFlags flags)
-  : QMessageBox {icon, QCoreApplication::applicationName (), text, buttons, parent, flags}
+  : QMessageBox {icon, program_name (), text, buttons, parent, flags}
 {
 }
 

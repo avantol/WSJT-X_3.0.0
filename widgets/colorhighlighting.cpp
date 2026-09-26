@@ -8,6 +8,7 @@
 
 #include "ui_colorhighlighting.h"
 #include "moc_colorhighlighting.cpp"
+#include "revision_utils.hpp"
 
 ColorHighlighting::ColorHighlighting (QSettings * settings, DecodeHighlightingModel const& highlight_model, QWidget * parent)
   : QDialog {parent}
@@ -15,7 +16,7 @@ ColorHighlighting::ColorHighlighting (QSettings * settings, DecodeHighlightingMo
   , settings_ {settings}
 {
   ui->setupUi(this);
-  setWindowTitle (QApplication::applicationName () + " - Colors");
+  setWindowTitle (program_name () + " - Colors");
   read_settings ();
   set_items (highlight_model);
 }

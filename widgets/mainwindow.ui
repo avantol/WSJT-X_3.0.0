@@ -17,7 +17,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>WSJT-X   by K1JT (mod)</string>
+   <string>FT8 (UDP Edition)</string>
   </property>
   <property name="toolTip">
    <string/>
@@ -4883,19 +4883,6 @@ QPushButton[state=&quot;ok&quot;] {
     <property name="title">
      <string>Help</string>
     </property>
-    <addaction name="actionRelease_Notes"/>
-    <addaction name="actionOnline_User_Guide"/>
-    <addaction name="actionLocal_User_Guide"/>
-    <addaction name="actionFT8_DXpedition_Mode_User_Guide"/>
-    <addaction name="actionSuperFox_User_Guide"/>
-    <addaction name="actionQSG_FST4"/>
-    <addaction name="actionQSG_Q65"/>
-    <addaction name="actionQSG_X250_M3"/>
-    <addaction name="actionQuick_Start_Guide_to_WSJT_X_2_7_and_QMAP"/>
-    <addaction name="download_samples_action"/>
-    <addaction name="separator"/>
-    <addaction name="actionWSJT_X_improved_Home_Page"/>
-    <addaction name="actionThe_additional_features_of_wsjt_x_improved"/>
     <addaction name="actionRecommended_Audio_Settings"/>
     <addaction name="actionRig_Control_Errors"/>
     <addaction name="separator"/>
@@ -4967,7 +4954,7 @@ QPushButton[state=&quot;ok&quot;] {
   </action>
   <action name="actionAbout">
    <property name="text">
-    <string>About WSJT-X</string>
+    <string>About FT8 (UDP Edition)</string>
    </property>
    <property name="menuRole">
     <enum>QAction::AboutRole</enum>

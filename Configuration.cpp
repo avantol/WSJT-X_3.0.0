@@ -210,6 +210,7 @@
 
 #include "ui_Configuration.h"
 #include "moc_Configuration.cpp"
+#include "revision_utils.hpp"
 
 namespace
 {
@@ -313,7 +314,7 @@ public:
     end_date_time_edit_->setMinimumDate(QDate::currentDate().addDays(-365));
     preferred_frequency_checkbox_ = new QCheckBox {tr ("")};
 
-    setWindowTitle (QApplication::applicationName () + " - " +
+    setWindowTitle (program_name () + " - " +
                     tr ("Add Frequency"));
 
     region_combo_box_.setModel (regions_model);
@@ -407,7 +408,7 @@ public:
     : QDialog {parent}
     , filtered_bands_ {new CandidateKeyFilter {bands, stations, 0, 0}}
   {
-    setWindowTitle (QApplication::applicationName () + " - " + tr ("Add Station"));
+    setWindowTitle (program_name () + " - " + tr ("Add Station"));
 
     band_.setModel (filtered_bands_.data ());
       

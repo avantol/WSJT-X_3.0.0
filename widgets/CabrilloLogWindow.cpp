@@ -13,6 +13,7 @@
 #include "pimpl_impl.hpp"
 
 #include "ui_CabrilloLogWindow.h"
+#include "revision_utils.hpp"
 
 namespace
 {
@@ -61,7 +62,7 @@ CabrilloLogWindow::CabrilloLogWindow (QSettings * settings, Configuration const 
   : AbstractLogWindow {"Cabrillo Log Window", settings, configuration, parent}
   , m_{cabrillo_log_model}
 {
-  setWindowTitle (QApplication::applicationName () + " - Cabrillo Log");
+  setWindowTitle (program_name () + " - Cabrillo Log");
   m_->ui_.setupUi (this);
   m_->format_model_.setSourceModel (m_->log_model_);
   m_->ui_.log_table_view->setModel (&m_->format_model_);

@@ -12,6 +12,7 @@
 #include "MessageBox.hpp"
 #include "SettingsGroup.hpp"
 #include "moc_widegraph.cpp"
+#include "revision_utils.hpp"
 
 WideGraph::WideGraph(QSettings * settings, QWidget *parent) :
   QDialog(parent),
@@ -25,7 +26,7 @@ WideGraph::WideGraph(QSettings * settings, QWidget *parent) :
 {
   ui->setupUi(this);
 
-  setWindowTitle (QApplication::applicationName () + " - " + tr ("Wide Graph"));
+  setWindowTitle (program_name () + " - " + tr ("Wide Graph"));
   setWindowFlags (Qt::WindowCloseButtonHint | Qt::WindowMinimizeButtonHint);
   setMaximumWidth (MAX_SCREENSIZE);
   setMaximumHeight (880);

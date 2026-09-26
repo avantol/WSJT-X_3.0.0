@@ -10,6 +10,7 @@
 #include <QDialogButtonBox>
 #include <QFormLayout>
 #include <QVBoxLayout>
+#include "revision_utils.hpp"
 
 //
 // Dialog to get callsign
@@ -26,7 +27,7 @@ public:
   explicit CallsignDialog (QWidget * parent = nullptr)
     : QDialog {parent}
   {
-    setWindowTitle (QApplication::applicationName () + " - " + tr ("Callsign"));
+    setWindowTitle (program_name () + " - " + tr ("Callsign"));
     
     callsign_.setValidator (new QRegExpValidator {QRegExp {"[A-Za-z0-9]+"}, this});
     
