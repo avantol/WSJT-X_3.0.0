@@ -39,12 +39,14 @@ void update_dynamic_property (QWidget * widget, char const * property, QVariant 
 
 QDateTime qt_round_date_time_to (QDateTime dt, int milliseconds)
 {
+  if (milliseconds <= 0) return dt;   //avt 9/26/26 no divide by zero
   dt.setMSecsSinceEpoch (dt.addMSecs (milliseconds / 2).toMSecsSinceEpoch () / milliseconds * milliseconds);
   return dt;
 }
 
 QDateTime qt_truncate_date_time_to (QDateTime dt, int milliseconds)
 {
+  if (milliseconds <= 0) return dt;   //avt 9/26/26 no divide by zero
   dt.setMSecsSinceEpoch (dt.toMSecsSinceEpoch () / milliseconds * milliseconds);
   return dt;
 }

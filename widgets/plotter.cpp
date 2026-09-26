@@ -145,7 +145,9 @@ void CPlotter::paintEvent(QPaintEvent *)                                // paint
 
 void CPlotter::draw(float swide[], bool bScroll, bool bRed)
 {
-  if (!m_TRperiod) return;      // not ready to plot yet
+  //avt 9/26/26 the period is a double scaled to int milliseconds
+  //later on, so anything under 1 ms is also "not ready"
+  if (m_TRperiod * 1e3 < 1.) return;      // not ready to plot yet
   int j,j0;
   float y,y2,ymin;
   double fac = sqrt(m_binsPerPixel*m_waterfallAvg/15.0);

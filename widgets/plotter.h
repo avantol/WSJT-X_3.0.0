@@ -180,7 +180,7 @@ private:
   double  m_fftBinWidth;
   double  m_dialFreq;
   double  m_xOffset;
-  double  m_TRperiod;
+  double  m_TRperiod {0};       //avt 9/26/26 was uninitialized, see draw()
 
   float   m_sum[2048];
 
