@@ -16,7 +16,7 @@ CAboutDlg::CAboutDlg(QWidget *parent) :
   //avt 9/25/26 "FT8 (UDP Edition)" branding
   ui->labelTxt->setText ("<h2>" + QString {"FT8 (UDP Edition) v3-"
                                              + revision () + " (" + testVer() + ")<br />(mod by WM8Q, qrz.com/db/WM8Q)"}.simplified () + "</h2>"
-    "<h2><a href=\"https:github.com/avantol/WSJT-X_3.0.0\">source code for modifications</a></h2>"
+    "<h2><a href=\"https://github.com/avantol/FT8-UDP-Edition\">source code for modifications</a></h2>"
     "FT8 (UDP Edition) is based on WSJT-X, which implements a number <br />"
     "of digital modes designed for weak-signal Amateur Radio <br />"
     "communication.  <br /><br />"

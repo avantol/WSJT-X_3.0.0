@@ -78,7 +78,7 @@ set (wsjtx_VERSION "${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}.${PROJECT_
 #
 # project information
 #
-set (PROJECT_BUNDLE_NAME "WSJT-X")
+set (PROJECT_BUNDLE_NAME "FT8 (UDP Edition)")   #avt 9/25/26 ProductName in the file properties
 set (PROJECT_VENDOR "WM8Q")
 set (PROJECT_CONTACT "WM8Q <qrz.com/db/WM8Q>")
 set (PROJECT_COPYRIGHT "See Help | Copyright info")
@@ -1593,6 +1593,9 @@ generate_version_info (wsjtx_VERSION_RESOURCES
   NAME wsjtx
   BUNDLE ${PROJECT_BUNDLE_NAME}
   ICON ${WSJTX_ICON_FILE}
+  # avt 9/25/26 set here rather than in PROJECT_DESCRIPTION, which is
+  # also configured into wsjtx_config.h and would rebuild everything
+  FILE_DESCRIPTION "FT8 (UDP Edition): Digital Modes for Weak Signal Communications in Amateur Radio"
   )
 
 add_executable (wsjtx MACOSX_BUNDLE

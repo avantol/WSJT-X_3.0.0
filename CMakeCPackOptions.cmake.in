@@ -5,7 +5,13 @@
 set (CPACK_PACKAGE_VENDOR "@PROJECT_VENDOR@")
 set (CPACK_PACKAGE_CONTACT "@PROJECT_CONTACT@")
 set (CPACK_RESOURCE_FILE_LICENSE "@PROJECT_SOURCE_DIR@/COPYING")
-set (CPACK_PACKAGE_INSTALL_DIRECTORY ${CPACK_PACKAGE_NAME})
+# avt 9/25/26 the installer option pages name the program from
+# CPACK_PACKAGE_NAME ("Add ... to the system PATH", "Create ... Desktop
+# Icon") and the default folder from CPACK_PACKAGE_INSTALL_DIRECTORY.
+# The built package file name is settled at configure time and stays
+# wsjtx-<version>-<platform>.
+set (CPACK_PACKAGE_NAME "@PROJECT_DISPLAY_NAME@")
+set (CPACK_PACKAGE_INSTALL_DIRECTORY "FT8-UDP-Edition")
 # avt 9/25/26 desktop and start menu shortcut label
 set (CPACK_PACKAGE_EXECUTABLES wsjtx "FT8 (UDP Edition)")
 set (CPACK_CREATE_DESKTOP_LINKS wsjtx)
