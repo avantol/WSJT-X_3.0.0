@@ -1,7 +1,7 @@
 # FT8 (UDP Edition)
  FT8 (UDP Edition) is derived from WSJT-X 3.0.0 RC1 ("release candidate 1" from September 15, 2025), modified for use with "Otto"
  <br><br>Download the FT8 (UDP Edition) installer from the release page: 
- <br>[https://github.com/avantol/WSJT-X_3.0.0/releases/latest](https://github.com/avantol/FT8-UDP-Edition/releases/latest)
+ <br>[https://github.com/avantol/FT8-UDP-Edition/releases/latest](https://github.com/avantol/FT8-UDP-Edition/releases/latest)
  <br><br>Download Otto.msi (required*) at [https://github.com/avantol/Otto/releases/latest](https://github.com/avantol/Otto/releases/latest)
  <br><br>(These two programs must run at the same time, as a versioned pair)
  <br>Also make sure Trusted QSL ("TQSL") is installed, and in the suggested folder.

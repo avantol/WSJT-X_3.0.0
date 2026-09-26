@@ -82,7 +82,7 @@ set (PROJECT_BUNDLE_NAME "FT8 (UDP Edition)")   #avt 9/25/26 ProductName in the 
 set (PROJECT_VENDOR "WM8Q")
 set (PROJECT_CONTACT "WM8Q <qrz.com/db/WM8Q>")
 set (PROJECT_COPYRIGHT "See Help | Copyright info")
-set (PROJECT_HOMEPAGE qrz.com/db/WM8Q)
+set (PROJECT_HOMEPAGE https://www.qrz.com/db/WM8Q)   #avt 9/25/26 needs the scheme to open
 set (PROJECT_MANUAL wsjtx-main)
 set (PROJECT_MANUAL_DIRECTORY_URL https://wsjt.sourceforge.io/wsjtx-doc/)
 set (PROJECT_SAMPLES_URL http://downloads.sourceforge.net/project/wsjt/)
@@ -1783,7 +1783,7 @@ install (PROGRAMS
   )
 
 install (FILES
-  README
+  README.md                     #avt 9/25/26 was README, now removed
   COPYING
   AUTHORS
   THANKS
